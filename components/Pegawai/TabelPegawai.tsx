@@ -40,13 +40,13 @@ const productData: Product[] = [
 const TabelPegawai = () => {
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="grid grid-cols-6  ">
-        <div className="col-span-5 py-6 px-4 md:px-6 xl:px-7.5">
+      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
+        <div className="col-span-6   flex items-center ">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Daftar Pegawai
           </h4>
         </div>
-        <div className="col-span-1 py-6 px-4 md:px-6 xl:px-7.5 flex items-end">
+        <div className="col-span-1 hidden items-end sm:flex">
           <BtnTambah />
         </div>
       </div>

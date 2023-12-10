@@ -39,3 +39,4 @@ model File{
   pegawai  Pegawai @relation(fields: [pegawaiId], references: [id])
   pegawaiId String
 }
+
