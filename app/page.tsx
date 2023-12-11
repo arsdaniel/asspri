@@ -1,6 +1,4 @@
-import { autOptions } from "@/lib/auth";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -10,12 +8,7 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const session = await getServerSession(autOptions);
-  if (session?.user) {
-    return redirect("/dashboard");
-  } else {
-    return redirect("/signin");
-  }
+  return redirect('/dashboard');
 };
 
 export default Home;

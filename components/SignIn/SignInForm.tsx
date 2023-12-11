@@ -21,23 +21,29 @@ const validationSchema = z.object({
 type ValidationSchema = z.infer<typeof validationSchema>;
 
 const SignInForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
 
   const onSubmit = async (values: ValidationSchema) => {
+    setIsLoading(true)
     const signInData = await signIn("credentials", {
+      redirect: false,
       email: values.email,
       password: values.password,
-      redirect: false,
+      callbackUrl: '/dashboard',
     });
     if (signInData?.error) {
       console.log(signInData.error);
+      setIsLoading(false);
+      reset();
     } else {
       router.push("/dashboard");
     }
@@ -45,7 +51,7 @@ const SignInForm = () => {
 
   return (
     <>
-      <div className="lg:p-10 lg:m-10 rounded-sm border  border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="bg-white border rounded-sm lg:p-10 lg:m-10 border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -70,7 +76,7 @@ const SignInForm = () => {
                 Applikasi Dokumentasi dan Pencatatan Asisten Pribadi
               </p>
 
-              <span className="mt-15 inline-block">
+              <span className="inline-block mt-15">
                 <svg
                   width="350"
                   height="350"
@@ -197,7 +203,7 @@ const SignInForm = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+              <h2 className="text-2xl font-bold text-black mb-9 dark:text-white sm:text-title-xl2">
                 Masuk ke Aplikasi
               </h2>
 
@@ -207,7 +213,7 @@ const SignInForm = () => {
                     Email
                   </label>
                   {errors?.email && (
-                    <p className="text-meta-1 text-sm">
+                    <p className="text-sm text-meta-1">
                       {errors?.email?.message}
                     </p>
                   )}
@@ -215,7 +221,7 @@ const SignInForm = () => {
                     <input
                       type="email"
                       placeholder="Ketikan Email Kakak disini"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="w-full py-4 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       {...register("email", { required: true })}
                     />
 
@@ -244,7 +250,7 @@ const SignInForm = () => {
                     Password
                   </label>
                   {errors?.password && (
-                    <p className="text-meta-1 text-sm">
+                    <p className="text-sm text-meta-1">
                       {errors?.password?.message}
                     </p>
                   )}
@@ -252,7 +258,7 @@ const SignInForm = () => {
                     <input
                       type="password"
                       placeholder="Disini tempat password ya...."
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="w-full py-4 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       {...register("password", { required: true })}
                     />
                     <span className="absolute right-4 top-4">
@@ -281,9 +287,10 @@ const SignInForm = () => {
 
                 <div className="mb-5">
                   <input
+                    disabled={isLoading}
                     type="submit"
-                    value="Masuk"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isLoading? 'Loading..': 'Masuk'}
+                    className="w-full p-4 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
                   />
                 </div>
 

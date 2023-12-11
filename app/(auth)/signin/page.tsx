@@ -11,17 +11,12 @@ export const metadata: Metadata = {
 };
 
 const SignIn: React.FC = async () => {
-  const session = await getServerSession(autOptions);
-  if (session?.user) {
-    console.log(session);
-    return redirect("/dashboard");
-  } else {
     return (
       <>
         <SignInForm />
       </>
     );
   }
-};
+
 
 export default SignIn;

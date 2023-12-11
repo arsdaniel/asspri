@@ -52,7 +52,7 @@ const DropdownUser = () => {
           <span className="block text-xs">{session?.user.email}</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
+        <span className="w-12 h-12 rounded-full">
           <Image
             width={112}
             height={112}
@@ -161,11 +161,8 @@ const DropdownUser = () => {
           </li>
         </ul>
         <button
-          onClick={() =>
-            signOut({
-              redirect: true,
-            })
-          }
+          onClick={() => signOut({redirect: true,callbackUrl: `/signin`
+        })}
           className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         >
           <svg
